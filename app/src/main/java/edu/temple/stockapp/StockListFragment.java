@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
@@ -45,9 +46,11 @@ public class StockListFragment extends Fragment {
         v = inflater.inflate(R.layout.fragment_stock_list, container, false);
 
         textView = v.findViewById(R.id.editText);
+        listView = v.findViewById(R.id.listView);
 
-        file = new File(context.getFilesDir(), internalFilename);
+        //file = new File(context.getFilesDir(), internalFilename);
 
+        /*
         if(file.exists()){
             try {
                 BufferedReader br = new BufferedReader(new FileReader(file));
@@ -62,6 +65,13 @@ public class StockListFragment extends Fragment {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+        */
+
+        try {
+            listView.setAdapter(new StockListAdapter(context));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
 
         return v;
