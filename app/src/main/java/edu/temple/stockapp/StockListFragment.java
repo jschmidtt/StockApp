@@ -77,4 +77,8 @@ public class StockListFragment extends Fragment {
         return v;
     }
 
+    public void stockUpdate() throws FileNotFoundException {
+        listView.setAdapter(new StockListAdapter(context));
+    }
+
 }

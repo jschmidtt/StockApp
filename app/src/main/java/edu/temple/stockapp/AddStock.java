@@ -1,5 +1,6 @@
 package edu.temple.stockapp;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -49,10 +50,13 @@ public class AddStock extends AppCompatActivity {
         });
 
 
+        final Intent sendBack = new Intent();
+
         //Cancel Button
         buttonCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setResult(RESULT_CANCELED, sendBack);
                 finish();
             }
         });
@@ -68,6 +72,7 @@ public class AddStock extends AppCompatActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                setResult(RESULT_OK, sendBack);
                 finish();
             }
         });
