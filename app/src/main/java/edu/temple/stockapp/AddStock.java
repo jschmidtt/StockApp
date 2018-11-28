@@ -12,6 +12,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -88,12 +91,13 @@ public class AddStock extends AppCompatActivity {
                 finish();
                 */
 
-                new JsonTask().execute("http://dev.markitondemand.com/MODApis/Api/v2/Quote/json/?symbol=goog");
+                new JsonTask().execute("http://dev.markitondemand.com/MODApis/Api/v2/Quote/json/?symbol=gggg");
 
             }
         });
     }
 
+    //"JSON TASK" Grabs the url that is given and tries to open/read it then saves that to string
     private class JsonTask extends AsyncTask<String, String, String> {
 
         protected void onPreExecute() {
@@ -126,7 +130,7 @@ public class AddStock extends AppCompatActivity {
 
                 while ((line = reader.readLine()) != null) {
                     buffer.append(line+"\n");
-                    Log.d("Response: ", "> " + line);   //here u ll get whole response...... :-)
+                    Log.d("Response: ", "> " + line);  //Where the data/string is grabbed sent to log 
 
                 }
 
@@ -152,13 +156,23 @@ public class AddStock extends AppCompatActivity {
             return null;
         }
 
+        //Post Execute of URL Grab
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
             if (pd.isShowing()){
                 pd.dismiss();
             }
-            //txtJson.setText(result);
+            //Put string from URL into JSON
+            //Check if JSON Status is there for stock url
+            try {
+                JSONObject jsonReturned = new JSONObject(result);
+                if(!jsonReturned.has("Status")){
+                    Log.e("JSON ERROR: ", result);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
